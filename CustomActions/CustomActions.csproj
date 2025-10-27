@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="WixToolset.Dtf.WindowsInstaller" Version="4.0.5" />
-    <PackageReference Include="WixToolset.Msi" Version="4.0.5" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
