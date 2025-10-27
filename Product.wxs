@@ -95,7 +95,11 @@
       <Directory Id="WhiteBeardDataFolder" Name="WhiteBeard" />
     </StandardDirectory>
       
+<StandardDirectory Id="ProgramFiles64Folder">
+  <Directory Id="MT5InstallFolder" Name="MetaTrader 5">
     <Directory Id="MT5PluginsFolder" Name="Plugins" />
+  </Directory>
+</StandardDirectory>
   </Fragment>
 
   <!-- Components -->
