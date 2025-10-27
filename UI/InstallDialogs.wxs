@@ -41,11 +41,13 @@
         <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Browse to your WhiteBeard Pawn Plugin license file." />
         
         <Control Id="FileLabel" Type="Text" X="20" Y="60" Width="100" Height="15" NoPrefix="yes" Text="License File:" />
-        <Control Id="FileEdit" Type="Edit" X="20" Y="78" Width="330" Height="18" Property="LICENSEFILE">
-          <Publish Property="LICENSEFILE" Value="C:\ProgramData\WhiteBeard\" Order="1" Condition="NOT LICENSEFILE" />
+        <Control Id="FileEdit" Type="PathEdit" X="20" Y="78" Width="250" Height="18" Property="LICENSEFILE" />
+        <Control Id="FileBrowseButton" Type="PushButton" X="275" Y="78" Width="75" Height="18" Text="Browse...">
+          <Publish Property="_BrowseProperty" Value="LICENSEFILE" Order="1" />
+          <Publish Event="SpawnDialog" Value="FileBrowseDlg" Order="2" />
         </Control>
         
-        <Control Id="InfoText" Type="Text" X="20" Y="110" Width="330" Height="80" NoPrefix="yes" Text="Please enter the full path to your license file ending with &quot;_pawn_plugin.lic&quot;.&#xA;&#xA;Example: C:\ProgramData\WhiteBeard\company_pawn_plugin.lic&#xA;&#xA;The license file should have been provided to you by WhiteBeard after registration.&#xA;&#xA;Default search location: C:\ProgramData\WhiteBeard" />
+        <Control Id="InfoText" Type="Text" X="20" Y="110" Width="330" Height="80" NoPrefix="yes" Text="Please select a file ending with &quot;_pawn_plugin.lic&quot;.&#xA;&#xA;The license file should have been provided to you by WhiteBeard after registration.&#xA;&#xA;Default search location: C:\ProgramData\WhiteBeard" />
         
         <Control Id="OK" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="OK">
           <Publish Event="DoAction" Value="CA_SearchLicenseFile" Order="1" />
@@ -54,6 +56,18 @@
         
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
           <Publish Event="EndDialog" Value="Return" />
+        </Control>
+      </Dialog>
+      
+      <!-- File Browse Dialog -->
+      <Dialog Id="FileBrowseDlg" Width="370" Height="270" Title="Browse for License File">
+        <Control Id="PathEdit" Type="PathEdit" X="25" Y="202" Width="320" Height="18" Property="LICENSEFILE" Indirect="yes" />
+        <Control Id="OK" Type="PushButton" X="240" Y="243" Width="56" Height="17" Default="yes" Text="OK">
+          <Publish Event="EndDialog" Value="Return" />
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="Reset" Value="0" Order="1" />
+          <Publish Event="EndDialog" Value="Return" Order="2" />
         </Control>
       </Dialog>
     </UI>
