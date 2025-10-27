@@ -2,26 +2,26 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Fragment>
     <UI Id="CustomInstallUI">
-      <!-- Include WixUI dialogs we'll reuse -->
-      <UIRef Id="WixUI_Common" />
+      <!-- Use complete WixUI_Minimal as base instead of just WixUI_Common -->
+      <UIRef Id="WixUI_Minimal" />
+      
+      <!-- Error handling -->
+      <Property Id="ErrorDialog" Value="ErrorDlg" Hidden="yes" />
       
       <!-- Property for validation messages -->
       <Property Id="VALIDATIONMESSAGE" Hidden="yes" />
       <Property Id="MT5STATUSMESSAGE" Hidden="yes" />
       
       <!-- Dialog sequence -->
-      <DialogRef Id="WelcomeDlg" />
       <DialogRef Id="LicenseVerifyDlg" />
       <DialogRef Id="LicenseBrowseDlg" />
       <DialogRef Id="MT5DetectionDlg" />
-      <DialogRef Id="LicenseAgreementDlg" />
-      <DialogRef Id="VerifyReadyDlg" />
       
-      <!-- Welcome Dialog - Entry Point -->
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseVerifyDlg" />
+      <!-- Override Welcome Dialog navigation to go to our custom license dialog -->
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseVerifyDlg" Order="2" />
       
-      <!-- Verify Ready Dialog - Before Installation -->
-      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" />
+      <!-- LicenseAgreementDlg Back button should go to MT5Detection -->
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="MT5DetectionDlg" Order="2" />
     </UI>
     
     <!-- License Browse Dialog -->

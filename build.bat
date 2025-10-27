@@ -44,7 +44,7 @@ if errorlevel 1 (
 )
 
 REM Build the MSI using dotnet build (recommended for WiX v4 SDK projects)
-dotnet build WhiteBeardPawnPlugin.wixproj -c Release
+dotnet build WhiteBeardPawnPlugin.wixproj -c Release -p:SuppressIces=ICE17;ICE31
 if errorlevel 1 (
     echo ERROR: WiX build failed
     pause
