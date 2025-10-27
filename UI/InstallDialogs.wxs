@@ -2,9 +2,6 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Fragment>
     <UI Id="CustomInstallUI">
-      <!-- Error handling -->
-      <Property Id="ErrorDialog" Value="ErrorDlg" Hidden="yes" />
-      
       <!-- Property for validation messages -->
       <Property Id="VALIDATIONMESSAGE" Hidden="yes" />
       <Property Id="MT5STATUSMESSAGE" Hidden="yes" />
