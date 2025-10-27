@@ -10,46 +10,77 @@ set OUTDIR=%PROJECTDIR%bin\Release
 
 REM Try to find WiX in common installation locations
 set WIXPATH=
+set WIXVERSION=
 
 REM Check dotnet tools path first (most common for WiX v4+)
-if exist "%USERPROFILE%\.dotnet\tools\wix.exe" set WIXPATH=%USERPROFILE%\.dotnet\tools
+if exist "%USERPROFILE%\.dotnet\tools\wix.exe" (
+    set WIXPATH=%USERPROFILE%\.dotnet\tools
+    set WIXVERSION=4
+)
 
 REM Check traditional WiX v3 installation paths
-if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
-if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
-if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.11\bin
-if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.14\bin
+if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" (
+    set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
+    set WIXVERSION=3
+)
+if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" (
+    set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
+    set WIXVERSION=3
+)
+if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" (
+    set WIXPATH=C:\Program Files\WiX Toolset v3.11\bin
+    set WIXVERSION=3
+)
+if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" (
+    set WIXPATH=C:\Program Files\WiX Toolset v3.14\bin
+    set WIXVERSION=3
+)
 
-REM Check if candle.exe or wix.exe is in PATH
+REM Check if wix.exe (v4) is in PATH
 where wix.exe >nul 2>&1
 if %errorlevel% equ 0 (
-    echo WiX Toolset found in PATH
+    echo WiX Toolset v4 found in PATH
     set WIXPATH=
+    set WIXVERSION=4
     goto :wix_found
 )
 
+REM Check if candle.exe (v3) is in PATH
 where candle.exe >nul 2>&1
 if %errorlevel% equ 0 (
-    echo WiX Toolset found in PATH
+    echo WiX Toolset v3 found in PATH
     set WIXPATH=
+    set WIXVERSION=3
     goto :wix_found
 )
 
 REM Check if WiX was found
-if "%WIXPATH%"=="" (
+if "%WIXVERSION%"=="" (
     echo ERROR: WiX Toolset not found!
     echo.
-    echo Please install WiX Toolset v3.11 or newer from https://wixtoolset.org/
+    echo This project requires WiX Toolset v3.11 or newer.
     echo.
-    echo Alternatively, install via:
-    echo   - Download from: https://github.com/wixtoolset/wix3/releases
-    echo   - Or use dotnet tool: dotnet tool install --global wix
+    echo Install options:
+    echo   - WiX v3: Download from https://github.com/wixtoolset/wix3/releases
+    echo   - WiX v4: dotnet tool install --global wix (Note: Requires project updates for v4)
     echo.
     pause
     exit /b 1
 )
 
-echo Found WiX Toolset at: %WIXPATH%
+if "%WIXVERSION%"=="4" (
+    echo ERROR: This project is designed for WiX v3, but WiX v4 was found.
+    echo.
+    echo Please install WiX Toolset v3.11 from:
+    echo https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311.exe
+    echo.
+    echo Or uninstall WiX v4 with: dotnet tool uninstall --global wix
+    echo.
+    pause
+    exit /b 1
+)
+
+echo Found WiX Toolset v3 at: %WIXPATH%
 :wix_found
 
 echo Step 1: Building Custom Actions...
