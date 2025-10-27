@@ -2,9 +2,6 @@
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Fragment>
     <UI Id="CustomInstallUI">
-      <!-- Use complete WixUI_Minimal as base instead of just WixUI_Common -->
-      <UIRef Id="WixUI_Minimal" />
-      
       <!-- Error handling -->
       <Property Id="ErrorDialog" Value="ErrorDlg" Hidden="yes" />
       
@@ -12,16 +9,28 @@
       <Property Id="VALIDATIONMESSAGE" Hidden="yes" />
       <Property Id="MT5STATUSMESSAGE" Hidden="yes" />
       
-      <!-- Dialog sequence -->
+      <!-- Reference standard WixUI dialogs -->
+      <DialogRef Id="ErrorDlg" />
+      <DialogRef Id="FatalError" />
+      <DialogRef Id="FilesInUse" />
+      <DialogRef Id="MsiRMFilesInUse" />
+      <DialogRef Id="PrepareDlg" />
+      <DialogRef Id="ProgressDlg" />
+      <DialogRef Id="ResumeDlg" />
+      <DialogRef Id="UserExit" />
+      <DialogRef Id="WelcomeDlg" />
+      <DialogRef Id="LicenseAgreementDlg" />
+      <DialogRef Id="VerifyReadyDlg" />
+      
+      <!-- Reference our custom dialogs -->
       <DialogRef Id="LicenseVerifyDlg" />
       <DialogRef Id="LicenseBrowseDlg" />
       <DialogRef Id="MT5DetectionDlg" />
       
-      <!-- Override Welcome Dialog navigation to go to our custom license dialog -->
-      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseVerifyDlg" Order="2" />
-      
-      <!-- LicenseAgreementDlg Back button should go to MT5Detection -->
-      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="MT5DetectionDlg" Order="2" />
+      <!-- Dialog flow: Welcome -> LicenseVerify -> MT5Detection -> LicenseAgreement -> VerifyReady -> Progress -> Finish -->
+      <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseVerifyDlg" />
+      <Publish Dialog="LicenseAgreementDlg" Control="Back" Event="NewDialog" Value="MT5DetectionDlg" />
+      <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" Order="2" />
     </UI>
     
     <!-- License Browse Dialog -->
