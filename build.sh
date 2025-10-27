@@ -42,9 +42,8 @@ if ! command -v wix &> /dev/null; then
     exit 1
 fi
 
-# Build the MSI
-mkdir -p "$OUT_DIR"
-wix build -o "$OUT_DIR/WhiteBeardPawnPlugin.msi" WhiteBeardPawnPlugin.wixproj -pdbtype none -arch x64
+# Build the MSI using dotnet build (recommended for WiX v4 SDK projects)
+dotnet build WhiteBeardPawnPlugin.wixproj -c Release
 
 if [ $? -ne 0 ]; then
     echo "ERROR: WiX build failed"

@@ -43,8 +43,8 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Build the MSI using wix build command
-wix build -o "%OUTDIR%\WhiteBeardPawnPlugin.msi" WhiteBeardPawnPlugin.wixproj -pdbtype none -arch x64
+REM Build the MSI using dotnet build (recommended for WiX v4 SDK projects)
+dotnet build WhiteBeardPawnPlugin.wixproj -c Release
 if errorlevel 1 (
     echo ERROR: WiX build failed
     pause

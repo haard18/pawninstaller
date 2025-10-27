@@ -47,14 +47,15 @@ if (-not $wixCmd) {
     exit 1
 }
 
-# Build the MSI
-$msiPath = Join-Path $OutDir "WhiteBeardPawnPlugin.msi"
-wix build -o $msiPath WhiteBeardPawnPlugin.wixproj -pdbtype none -arch x64
+# Build the MSI using dotnet build (recommended for WiX v4 SDK projects)
+dotnet build WhiteBeardPawnPlugin.wixproj -c Release
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "ERROR: WiX build failed" -ForegroundColor Red
     exit 1
 }
+
+$msiPath = Join-Path $OutDir "WhiteBeardPawnPlugin.msi"
 
 Write-Host ""
 Write-Host "========================================" -ForegroundColor Green
