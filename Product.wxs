@@ -27,7 +27,7 @@
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     
     <!-- Custom action DLL reference -->
-    <Binary Id="CustomActionsBinary" SourceFile="!(bindpath.CustomActions)CustomActions.CA.dll" />
+    <Binary Id="CustomActionsBinary" SourceFile="CustomActions\bin\Release\net472\CustomActions.dll" />
     
     <!-- Custom Actions -->
     <CustomAction Id="CA_CheckAdminPrivileges" 

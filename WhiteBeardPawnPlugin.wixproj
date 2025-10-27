@@ -19,8 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="CustomActions\CustomActions.csproj">
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
 </Project>
