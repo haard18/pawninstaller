@@ -45,7 +45,7 @@ bld/
 *.msp
 
 # Payload - ignore actual DLL, keep placeholder
-Payload/*.dll
+
 !Payload/*.dll.placeholder
 
 # Temporary files
