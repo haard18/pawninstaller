@@ -6,8 +6,8 @@
       <UIRef Id="WixUI_Common" />
       
       <!-- Property for validation messages -->
-      <Property Id="VALIDATIONMESSAGE" />
-      <Property Id="MT5STATUSMESSAGE" />
+      <Property Id="VALIDATIONMESSAGE" Hidden="yes" />
+      <Property Id="MT5STATUSMESSAGE" Hidden="yes" />
       
       <!-- Dialog sequence -->
       <DialogRef Id="WelcomeDlg" />

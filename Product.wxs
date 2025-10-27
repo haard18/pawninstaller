@@ -63,14 +63,14 @@
     
     <!-- Installation sequence -->
     <InstallUISequence>
-      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions">NOT Installed</Custom>
-      <Custom Action="CA_SearchLicenseFile" After="CA_CheckAdminPrivileges">NOT Installed</Custom>
-      <Custom Action="CA_DetectMT5Installation" After="CA_SearchLicenseFile">NOT Installed</Custom>
+      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions" Condition="NOT Installed" />
+      <Custom Action="CA_SearchLicenseFile" After="CA_CheckAdminPrivileges" Condition="NOT Installed" />
+      <Custom Action="CA_DetectMT5Installation" After="CA_SearchLicenseFile" Condition="NOT Installed" />
     </InstallUISequence>
     
     <InstallExecuteSequence>
-      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions">NOT Installed</Custom>
-      <Custom Action="CA_CopyPluginFiles" Before="InstallFinalize">NOT Installed AND LICENSEVALID="1"</Custom>
+      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions" Condition="NOT Installed" />
+      <Custom Action="CA_CopyPluginFiles" Before="InstallFinalize" Condition="NOT Installed AND LICENSEVALID=&quot;1&quot;" />
     </InstallExecuteSequence>
 
     <!-- UI Reference -->
