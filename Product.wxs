@@ -23,9 +23,6 @@
     <Property Id="HASADMINPRIVILEGES" Secure="yes" Value="0" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
     
-    <!-- Check for admin privileges -->
-    <Property Id="ALLUSERS" Value="1" />
-    
     <!-- Custom action DLL reference -->
     <Binary Id="CustomActionsBinary" SourceFile="$(var.CustomActions.TargetDir)$(var.CustomActions.TargetName).CA.dll" />
     
