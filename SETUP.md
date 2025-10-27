@@ -1,6 +1,6 @@
 # WhiteBeard Pawn Plugin - Windows Installer
 
-A WiX-based Windows installer (MSI) for the WhiteBeard Pawn Plugin for MetaTrader 5.
+A WiX v4-based Windows installer (MSI) for the WhiteBeard Pawn Plugin for MetaTrader 5.
 
 ## Features
 
@@ -35,9 +35,9 @@ A WiX-based Windows installer (MSI) for the WhiteBeard Pawn Plugin for MetaTrade
 
 ### Development Environment
 - **Windows OS**: Windows 10/11 or Windows Server 2016+
-- **WiX Toolset**: v3.11 or newer ([Download](https://wixtoolset.org/releases/))
+- **WiX Toolset v4**: Install via `dotnet tool install --global wix`
 - **.NET Framework**: 4.7.2 or newer (for custom actions)
-- **.NET SDK**: 6.0+ for building custom actions
+- **.NET SDK**: 6.0+ for building custom actions and WiX v4
 - **Visual Studio**: 2019/2022 (optional, but recommended for development)
 
 ## Project Structure
@@ -64,17 +64,33 @@ pawninstaller/
 
 ## Building the Installer
 
+### Prerequisites
+First, install WiX v4:
+```powershell
+dotnet tool install --global wix
+```
+
+Or update if already installed:
+```powershell
+dotnet tool update --global wix
+```
+
 ### Method 1: Using Visual Studio
 1. Open `WhiteBeardPawnPlugin.sln` in Visual Studio
 2. Build the solution (F6 or Build > Build Solution)
 3. Find the MSI in `bin\Release\WhiteBeardPawnPlugin.msi`
 
-### Method 2: Using Command Line (Windows)
+### Method 2: Using Command Line (Windows - Batch)
 ```batch
 build.bat
 ```
 
-### Method 3: Using Command Line (Cross-platform)
+### Method 3: Using PowerShell
+```powershell
+.\build.ps1
+```
+
+### Method 4: Using Command Line (Cross-platform)
 ```bash
 chmod +x build.sh
 ./build.sh
@@ -203,8 +219,9 @@ This installer and the WhiteBeard Pawn Plugin are proprietary software. See `Lic
 ### Build Issues
 
 **WiX Toolset Not Found**
-- Ensure WiX Toolset v3.11+ is installed
-- Verify WiX bin folder is in PATH or update `build.bat` with correct path
+- Install WiX v4: `dotnet tool install --global wix`
+- Update WiX v4: `dotnet tool update --global wix`
+- Verify installation: `wix --version`
 
 **Custom Actions Build Fails**
 - Ensure .NET SDK 6.0+ is installed
@@ -244,17 +261,19 @@ This installer and the WhiteBeard Pawn Plugin are proprietary software. See `Lic
 
 ### Debugging
 - Enable WiX verbose logging:
-  ```
+  ```powershell
   msiexec /i WhiteBeardPawnPlugin.msi /l*v install.log
   ```
 - Check custom action logs in installer session log
 - Use Visual Studio debugger for custom actions (attach to msiexec.exe)
+- Build with debug symbols: `wix build -o output.msi WhiteBeardPawnPlugin.wixproj -pdbtype full`
 
 ## Version History
 
-**1.0.0** - Initial Release
+**1.0.0** - Initial Release (WiX v4)
 - License verification with API validation
 - Automatic MT5 detection
 - Admin privilege checking
 - File installation to MT5 Plugins folder
 - License storage in ProgramData
+- Migrated to WiX Toolset v4 for modern .NET integration

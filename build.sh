@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# WhiteBeard Pawn Plugin Installer Build Script (Cross-platform alternative)
-# Note: This requires WiX to be installed and accessible
+# WhiteBeard Pawn Plugin Installer Build Script (WiX v4)
 
 echo "========================================"
 echo "WhiteBeard Pawn Plugin Installer Build"
@@ -28,21 +27,27 @@ fi
 cd "$PROJECT_DIR"
 
 echo ""
-echo "Step 2: Compiling WiX source files..."
-# Note: On non-Windows, you would use wixl or similar tools
-# This script assumes WiX is in PATH
-candle -ext WixUIExtension -ext WixUtilExtension -o "obj/Release/" Product.wxs LicenseVerificationDialog.wxs MT5DetectionDialog.wxs UI/InstallDialogs.wxs
-if [ $? -ne 0 ]; then
-    echo "ERROR: WiX compilation failed"
+echo "Step 2: Building MSI with WiX v4..."
+
+# Check if wix command is available
+if ! command -v wix &> /dev/null; then
+    echo "ERROR: WiX v4 not found!"
+    echo ""
+    echo "Please install WiX v4 using:"
+    echo "  dotnet tool install --global wix"
+    echo ""
+    echo "Or update if already installed:"
+    echo "  dotnet tool update --global wix"
+    echo ""
     exit 1
 fi
 
-echo ""
-echo "Step 3: Linking MSI package..."
+# Build the MSI
 mkdir -p "$OUT_DIR"
-light -ext WixUIExtension -ext WixUtilExtension -o "$OUT_DIR/WhiteBeardPawnPlugin.msi" -cultures:en-us obj/Release/*.wixobj
+wix build -o "$OUT_DIR/WhiteBeardPawnPlugin.msi" WhiteBeardPawnPlugin.wixproj -pdbtype none -arch x64
+
 if [ $? -ne 0 ]; then
-    echo "ERROR: WiX linking failed"
+    echo "ERROR: WiX build failed"
     exit 1
 fi
 
