@@ -62,7 +62,7 @@ if "%WIXVERSION%"=="" (
     echo.
     echo Install options:
     echo   - WiX v3: Download from https://github.com/wixtoolset/wix3/releases
-    echo   - WiX v4: dotnet tool install --global wix (Note: Requires project updates for v4)
+    echo   - WiX v4: dotnet tool install --global wix ^(Note: Requires project updates for v4^)
     echo.
     pause
     exit /b 1
