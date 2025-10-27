@@ -1,0 +1,57 @@
+# Build directories
+bin/
+obj/
+*.user
+*.suo
+*.cache
+
+# Visual Studio
+.vs/
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# WiX
+*.wixobj
+*.wixpdb
+
+# .NET
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+
+# NuGet
+*.nupkg
+*.snupkg
+**/packages/*
+!**/packages/build/
+*.nuget.props
+*.nuget.targets
+
+# MSI files (comment out if you want to track built installers)
+*.msi
+*.msm
+*.msp
+
+# Payload - ignore actual DLL, keep placeholder
+Payload/*.dll
+!Payload/*.dll.placeholder
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# macOS
+.DS_Store

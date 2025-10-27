@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+  
+  <?define ProductName = "WhiteBeard Pawn Plugin" ?>
+  <?define Manufacturer = "WhiteBeard" ?>
+  <?define ProductVersion = "1.0.0" ?>
+  <?define UpgradeCode = "A1B2C3D4-E5F6-7890-ABCD-EF1234567890" ?>
+  
+  <Product Id="*" 
+           Name="$(var.ProductName)" 
+           Language="1033" 
+           Version="$(var.ProductVersion)" 
+           Manufacturer="$(var.Manufacturer)" 
+           UpgradeCode="$(var.UpgradeCode)">
+    
+    <Package InstallerVersion="500" 
+             Compressed="yes" 
+             InstallScope="perMachine" 
+             InstallPrivileges="elevated"
+             Description="WhiteBeard Pawn Plugin for MetaTrader 5"
+             Comments="Install the WhiteBeard Pawn Plugin to enhance your MT5 trading platform" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Custom properties for license and MT5 detection -->
+    <Property Id="LICENSEFILE" Secure="yes" />
+    <Property Id="COMPANYNAME" Secure="yes" />
+    <Property Id="COMPANYEMAIL" Secure="yes" />
+    <Property Id="LICENSEVALID" Secure="yes" Value="0" />
+    <Property Id="MT5DIRECTORY" Secure="yes" />
+    <Property Id="HASADMINPRIVILEGES" Secure="yes" Value="0" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    
+    <!-- Check for admin privileges -->
+    <Property Id="ALLUSERS" Value="1" />
+    
+    <!-- Custom action DLL reference -->
+    <Binary Id="CustomActionsBinary" SourceFile="$(var.CustomActions.TargetDir)$(var.CustomActions.TargetName).CA.dll" />
+    
+    <!-- Custom Actions -->
+    <CustomAction Id="CA_CheckAdminPrivileges" 
+                  BinaryKey="CustomActionsBinary" 
+                  DllEntry="CheckAdminPrivileges" 
+                  Execute="immediate" 
+                  Return="check" />
+    
+    <CustomAction Id="CA_SearchLicenseFile" 
+                  BinaryKey="CustomActionsBinary" 
+                  DllEntry="SearchLicenseFile" 
+                  Execute="immediate" 
+                  Return="check" />
+    
+    <CustomAction Id="CA_ValidateLicense" 
+                  BinaryKey="CustomActionsBinary" 
+                  DllEntry="ValidateLicense" 
+                  Execute="immediate" 
+                  Return="check" />
+    
+    <CustomAction Id="CA_DetectMT5Installation" 
+                  BinaryKey="CustomActionsBinary" 
+                  DllEntry="DetectMT5Installation" 
+                  Execute="immediate" 
+                  Return="check" />
+    
+    <CustomAction Id="CA_CopyPluginFiles" 
+                  BinaryKey="CustomActionsBinary" 
+                  DllEntry="CopyPluginFiles" 
+                  Execute="deferred" 
+                  Impersonate="no"
+                  Return="check" />
+    
+    <!-- Installation sequence -->
+    <InstallUISequence>
+      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions">NOT Installed</Custom>
+      <Custom Action="CA_SearchLicenseFile" After="CA_CheckAdminPrivileges">NOT Installed</Custom>
+      <Custom Action="CA_DetectMT5Installation" After="CA_SearchLicenseFile">NOT Installed</Custom>
+    </InstallUISequence>
+    
+    <InstallExecuteSequence>
+      <Custom Action="CA_CheckAdminPrivileges" After="LaunchConditions">NOT Installed</Custom>
+      <Custom Action="CA_CopyPluginFiles" Before="InstallFinalize">NOT Installed AND LICENSEVALID="1"</Custom>
+    </InstallExecuteSequence>
+
+    <!-- UI Reference -->
+    <UIRef Id="CustomInstallUI" />
+    
+    <!-- Features -->
+    <Feature Id="ProductFeature" Title="WhiteBeard Pawn Plugin" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentGroupRef Id="LicenseComponents" />
+    </Feature>
+  </Product>
+
+  <!-- Directory Structure -->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="ManufacturerFolder" Name="$(var.Manufacturer)">
+          <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
+        </Directory>
+      </Directory>
+      
+      <Directory Id="CommonAppDataFolder">
+        <Directory Id="WhiteBeardDataFolder" Name="WhiteBeard" />
+      </Directory>
+      
+      <Directory Id="MT5PluginsFolder" Name="Plugins" />
+    </Directory>
+  </Fragment>
+
+  <!-- Components -->
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="PawnPluginDLL" Guid="B1C2D3E4-F5A6-7B8C-9D0E-1F2A3B4C5D6E">
+        <File Id="PawnPlugin64DLL" Source="Payload\PawnPlugin64.dll" KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+    
+    <ComponentGroup Id="LicenseComponents" Directory="WhiteBeardDataFolder">
+      <Component Id="LicenseFileComponent" Guid="C2D3E4F5-A6B7-8C9D-0E1F-2A3B4C5D6E7F">
+        <CreateFolder />
+        <!-- License file will be copied by custom action -->
+        <RemoveFolder Id="RemoveWhiteBeardDataFolder" On="uninstall" />
+        <RegistryValue Root="HKLM" 
+                       Key="Software\WhiteBeard\PawnPlugin" 
+                       Name="LicenseLocation" 
+                       Type="string" 
+                       Value="[WhiteBeardDataFolder]" 
+                       KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

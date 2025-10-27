@@ -1,0 +1,5 @@
+# Placeholder for PawnPlugin64.dll
+# This file should be replaced with the actual compiled plugin DLL
+
+# In production, you would place the actual PawnPlugin64.dll file here
+# before building the installer

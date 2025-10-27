@@ -1,0 +1,28 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "WhiteBeardPawnPlugin", "WhiteBeardPawnPlugin.wixproj", "{F3D8E9A1-2C4D-4B5E-8F6A-1A2B3C4D5E6F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890} = {A1B2C3D4-E5F6-7890-ABCD-EF1234567890}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomActions", "CustomActions\CustomActions.csproj", "{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3D8E9A1-2C4D-4B5E-8F6A-1A2B3C4D5E6F}.Debug|x86.ActiveCfg = Debug|x86
+		{F3D8E9A1-2C4D-4B5E-8F6A-1A2B3C4D5E6F}.Debug|x86.Build.0 = Debug|x86
+		{F3D8E9A1-2C4D-4B5E-8F6A-1A2B3C4D5E6F}.Release|x86.ActiveCfg = Release|x86
+		{F3D8E9A1-2C4D-4B5E-8F6A-1A2B3C4D5E6F}.Release|x86.Build.0 = Release|x86
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Debug|x86.Build.0 = Debug|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1B2C3D4-E5F6-7890-ABCD-EF1234567890}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

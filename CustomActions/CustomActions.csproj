@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <ProjectGuid>{a1b2c3d4-e5f6-7890-abcd-ef1234567890}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WhiteBeard.PawnPlugin.Installer</RootNamespace>
+    <AssemblyName>CustomActions</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WixToolset.Dtf.WindowsInstaller" Version="4.0.5" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Security" />
+  </ItemGroup>
+</Project>

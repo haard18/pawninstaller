@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Fragment>
+    <UI Id="LicenseVerificationDialog">
+      <Dialog Id="LicenseVerifyDlg" Width="370" Height="270" Title="[ProductName] - License Verification">
+        
+        <!-- Background -->
+        <Control Id="BannerBitmap" Type="Bitmap" X="0" Y="0" Width="370" Height="44" TabSkip="no" Text="!(loc.InstallDirDlgBannerBitmap)" />
+        <Control Id="BannerLine" Type="Line" X="0" Y="44" Width="370" Height="0" />
+        <Control Id="BottomLine" Type="Line" X="0" Y="234" Width="370" Height="0" />
+        
+        <!-- Title and description -->
+        <Control Id="Title" Type="Text" X="15" Y="6" Width="200" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>{\WixUI_Font_Title}License Verification</Text>
+        </Control>
+        <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes">
+          <Text>Please provide your WhiteBeard Pawn Plugin license file.</Text>
+        </Control>
+        
+        <!-- Product Information (Read-only) -->
+        <Control Id="ProductLabel" Type="Text" X="20" Y="55" Width="100" Height="15" NoPrefix="yes" Text="Product:" />
+        <Control Id="ProductValue" Type="Text" X="130" Y="55" Width="220" Height="15" NoPrefix="yes" Text="WhiteBeard Pawn Plugin" />
+        
+        <Control Id="CompanyLabel" Type="Text" X="20" Y="75" Width="100" Height="15" NoPrefix="yes" Text="Company:" />
+        <Control Id="CompanyValue" Type="Text" X="130" Y="75" Width="220" Height="15" NoPrefix="yes" Text="[COMPANYNAME]" />
+        
+        <Control Id="EmailLabel" Type="Text" X="20" Y="95" Width="100" Height="15" NoPrefix="yes" Text="Email:" />
+        <Control Id="EmailValue" Type="Text" X="130" Y="95" Width="220" Height="15" NoPrefix="yes" Text="[COMPANYEMAIL]" />
+        
+        <!-- License File Path (Read-only with Browse button) -->
+        <Control Id="LicensePathLabel" Type="Text" X="20" Y="120" Width="100" Height="15" NoPrefix="yes" Text="License Key:" />
+        <Control Id="LicensePathEdit" Type="Edit" X="20" Y="138" Width="250" Height="18" Property="LICENSEFILE" Disabled="yes" />
+        <Control Id="BrowseButton" Type="PushButton" X="275" Y="138" Width="75" Height="18" Text="Browse...">
+          <Publish Event="SpawnDialog" Value="LicenseBrowseDlg">1</Publish>
+        </Control>
+        
+        <!-- Validation Status -->
+        <Control Id="ValidationStatus" Type="Text" X="20" Y="165" Width="330" Height="30" NoPrefix="yes">
+          <Text>[VALIDATIONMESSAGE]</Text>
+          <Condition Action="show">VALIDATIONMESSAGE AND VALIDATIONMESSAGE &lt;&gt; ""</Condition>
+          <Condition Action="hide">NOT VALIDATIONMESSAGE OR VALIDATIONMESSAGE = ""</Condition>
+        </Control>
+        
+        <!-- Contact Information -->
+        <Control Id="ContactInfo" Type="Text" X="20" Y="195" Width="330" Height="35" NoPrefix="yes">
+          <Text>To obtain a license, please contact WhiteBeard:\nWebsite: www.whitebeard.ai\nEmail: info@whitebeard.ai | Phone: +1 646 422 8482</Text>
+        </Control>
+        
+        <!-- Navigation Buttons -->
+        <Control Id="Back" Type="PushButton" X="180" Y="243" Width="56" Height="17" Text="&amp;Back">
+          <Publish Event="NewDialog" Value="WelcomeDlg">1</Publish>
+        </Control>
+        
+        <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next">
+          <Publish Event="DoAction" Value="CA_ValidateLicense">1</Publish>
+          <Publish Event="NewDialog" Value="MT5DetectionDlg">LICENSEVALID="1"</Publish>
+          <Condition Action="enable">LICENSEFILE AND LICENSEFILE &lt;&gt; ""</Condition>
+          <Condition Action="disable">NOT LICENSEFILE OR LICENSEFILE = ""</Condition>
+        </Control>
+        
+        <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
+          <Publish Event="SpawnDialog" Value="CancelDlg">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

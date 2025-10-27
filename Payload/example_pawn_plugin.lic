@@ -1,0 +1,9 @@
+{
+  "company_name": "Example Company",
+  "company_email": "company@example.com",
+  "license_key": "XXXX-XXXX-XXXX-XXXX",
+  "product": "pawn_plugin",
+  "issued_date": "2025-01-01",
+  "expiry_date": "2026-01-01",
+  "features": ["mt5_plugin", "api_access"]
+}
