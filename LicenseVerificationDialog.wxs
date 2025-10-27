@@ -31,10 +31,7 @@
         </Control>
         
         <!-- Validation Status -->
-        <Control Id="ValidationStatus" Type="Text" X="20" Y="165" Width="330" Height="30" NoPrefix="yes" Text="[VALIDATIONMESSAGE]" Hidden="yes">
-          <Condition Action="show">VALIDATIONMESSAGE AND VALIDATIONMESSAGE &lt;&gt; ""</Condition>
-          <Condition Action="hide">NOT VALIDATIONMESSAGE OR VALIDATIONMESSAGE = ""</Condition>
-        </Control>
+        <Control Id="ValidationStatus" Type="Text" X="20" Y="165" Width="330" Height="30" NoPrefix="yes" Text="[VALIDATIONMESSAGE]" Hidden="yes" />
         
         <!-- Contact Information -->
         <Control Id="ContactInfo" Type="Text" X="20" Y="195" Width="330" Height="35" NoPrefix="yes" Text="To obtain a license, please contact WhiteBeard:&#xA;Website: www.whitebeard.ai&#xA;Email: info@whitebeard.ai | Phone: +1 646 422 8482" />
@@ -47,8 +44,6 @@
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next" Disabled="yes">
           <Publish Event="DoAction" Value="CA_ValidateLicense" Order="1" />
           <Publish Event="NewDialog" Value="MT5DetectionDlg" Order="2" Condition="LICENSEVALID=&quot;1&quot;" />
-          <Condition Action="enable">LICENSEFILE AND LICENSEFILE &lt;&gt; ""</Condition>
-          <Condition Action="disable">NOT LICENSEFILE OR LICENSEFILE = ""</Condition>
         </Control>
         
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">

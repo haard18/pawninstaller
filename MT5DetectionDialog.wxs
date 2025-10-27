@@ -22,10 +22,7 @@
         </Control>
         
         <!-- Status message -->
-        <Control Id="DetectionStatus" Type="Text" X="20" Y="105" Width="330" Height="30" NoPrefix="yes" Text="[MT5STATUSMESSAGE]" Hidden="yes">
-          <Condition Action="show">MT5STATUSMESSAGE AND MT5STATUSMESSAGE &lt;&gt; ""</Condition>
-          <Condition Action="hide">NOT MT5STATUSMESSAGE OR MT5STATUSMESSAGE = ""</Condition>
-        </Control>
+        <Control Id="DetectionStatus" Type="Text" X="20" Y="105" Width="330" Height="30" NoPrefix="yes" Text="[MT5STATUSMESSAGE]" Hidden="yes" />
         
         <!-- Information text -->
         <Control Id="InfoText" Type="Text" X="20" Y="140" Width="330" Height="80" NoPrefix="yes" Text="The installer will search for MetaTrader 5 in the default location:&#xA;C:\MetaTrader 5 Platform\TradeMain&#xA;&#xA;If MT5 is installed in a different location, please browse to the MT5 root directory.&#xA;&#xA;The plugin file (PawnPlugin64.dll) will be copied to the MT5 Plugins folder." />
@@ -38,8 +35,6 @@
         <Control Id="Next" Type="PushButton" X="236" Y="243" Width="56" Height="17" Default="yes" Text="&amp;Next" Disabled="yes">
           <Publish Event="DoAction" Value="CA_DetectMT5Installation" Order="1" />
           <Publish Event="NewDialog" Value="LicenseAgreementDlg" Order="2" Condition="MT5DIRECTORY AND MT5DIRECTORY &lt;&gt; &quot;&quot;" />
-          <Condition Action="enable">MT5DIRECTORY AND MT5DIRECTORY &lt;&gt; ""</Condition>
-          <Condition Action="disable">NOT MT5DIRECTORY OR MT5DIRECTORY = ""</Condition>
         </Control>
         
         <Control Id="Cancel" Type="PushButton" X="304" Y="243" Width="56" Height="17" Cancel="yes" Text="Cancel">
