@@ -14,24 +14,14 @@
       <DialogRef Id="LicenseVerifyDlg" />
       <DialogRef Id="LicenseBrowseDlg" />
       <DialogRef Id="MT5DetectionDlg" />
-      <DialogRef Id="BrowseDlg" />
       <DialogRef Id="LicenseAgreementDlg" />
-      <DialogRef Id="ProgressDlg" />
       <DialogRef Id="VerifyReadyDlg" />
-      <DialogRef Id="ExitDlg" />
-      <DialogRef Id="FatalError" />
-      <DialogRef Id="FilesInUse" />
-      <DialogRef Id="UserExit" />
-      <DialogRef Id="CancelDlg" />
       
       <!-- Welcome Dialog - Entry Point -->
       <Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="LicenseVerifyDlg" />
       
       <!-- Verify Ready Dialog - Before Installation -->
       <Publish Dialog="VerifyReadyDlg" Control="Back" Event="NewDialog" Value="LicenseAgreementDlg" />
-      
-      <!-- Exit Dialog - Completion -->
-      <Publish Dialog="ExitDlg" Control="Finish" Event="EndDialog" Value="Return" />
     </UI>
     
     <!-- License Browse Dialog -->
@@ -45,11 +35,7 @@
         <Control Id="Description" Type="Text" X="25" Y="23" Width="280" Height="15" Transparent="yes" NoPrefix="yes" Text="Browse to your WhiteBeard Pawn Plugin license file." />
         
         <Control Id="FileLabel" Type="Text" X="20" Y="60" Width="100" Height="15" NoPrefix="yes" Text="License File:" />
-        <Control Id="FileEdit" Type="PathEdit" X="20" Y="78" Width="250" Height="18" Property="LICENSEFILE" />
-        <Control Id="FileBrowseButton" Type="PushButton" X="275" Y="78" Width="75" Height="18" Text="Browse...">
-          <Publish Property="_BrowseProperty" Value="[LICENSEFILE]" Order="1" />
-          <Publish Event="SpawnDialog" Value="FileBrowseDlg" Order="2" />
-        </Control>
+        <Control Id="FileEdit" Type="Edit" X="20" Y="78" Width="330" Height="18" Property="LICENSEFILE" />
         
         <Control Id="InfoText" Type="Text" X="20" Y="110" Width="330" Height="60" NoPrefix="yes" Text="Please select a file ending with &quot;_pawn_plugin.lic&quot;.&#xA;&#xA;The license file should have been provided to you by WhiteBeard after registration.&#xA;&#xA;Default search location: C:\ProgramData\WhiteBeard" />
         
