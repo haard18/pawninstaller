@@ -10,12 +10,24 @@ set OUTDIR=%PROJECTDIR%bin\Release
 
 REM Try to find WiX in common installation locations
 set WIXPATH=
-if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
-if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
-if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.11\bin
-if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.14\bin
 
-REM Check if candle.exe is in PATH
+REM Check dotnet tools path first (most common for WiX v4+)
+if exist "%USERPROFILE%\.dotnet\tools\wix.exe" set WIXPATH=%USERPROFILE%\.dotnet\tools
+
+REM Check traditional WiX v3 installation paths
+if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
+if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
+if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.11\bin
+if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" set WIXPATH=C:\Program Files\WiX Toolset v3.14\bin
+
+REM Check if candle.exe or wix.exe is in PATH
+where wix.exe >nul 2>&1
+if %errorlevel% equ 0 (
+    echo WiX Toolset found in PATH
+    set WIXPATH=
+    goto :wix_found
+)
+
 where candle.exe >nul 2>&1
 if %errorlevel% equ 0 (
     echo WiX Toolset found in PATH
