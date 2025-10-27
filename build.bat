@@ -19,21 +19,29 @@ if exist "%USERPROFILE%\.dotnet\tools\wix.exe" (
 )
 
 REM Check traditional WiX v3 installation paths
-if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" (
-    set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin
-    set WIXVERSION=3
+if "%WIXPATH%"=="" (
+    if exist "C:\Program Files (x86)\WiX Toolset v3.11\bin\candle.exe" (
+        set "WIXPATH=C:\Program Files (x86)\WiX Toolset v3.11\bin"
+        set WIXVERSION=3
+    )
 )
-if "%WIXPATH%"=="" if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" (
-    set WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin
-    set WIXVERSION=3
+if "%WIXPATH%"=="" (
+    if exist "C:\Program Files (x86)\WiX Toolset v3.14\bin\candle.exe" (
+        set "WIXPATH=C:\Program Files (x86)\WiX Toolset v3.14\bin"
+        set WIXVERSION=3
+    )
 )
-if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" (
-    set WIXPATH=C:\Program Files\WiX Toolset v3.11\bin
-    set WIXVERSION=3
+if "%WIXPATH%"=="" (
+    if exist "C:\Program Files\WiX Toolset v3.11\bin\candle.exe" (
+        set "WIXPATH=C:\Program Files\WiX Toolset v3.11\bin"
+        set WIXVERSION=3
+    )
 )
-if "%WIXPATH%"=="" if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" (
-    set WIXPATH=C:\Program Files\WiX Toolset v3.14\bin
-    set WIXVERSION=3
+if "%WIXPATH%"=="" (
+    if exist "C:\Program Files\WiX Toolset v3.14\bin\candle.exe" (
+        set "WIXPATH=C:\Program Files\WiX Toolset v3.14\bin"
+        set WIXVERSION=3
+    )
 )
 
 REM Check if wix.exe (v4) is in PATH
@@ -62,7 +70,7 @@ if "%WIXVERSION%"=="" (
     echo.
     echo Install options:
     echo   - WiX v3: Download from https://github.com/wixtoolset/wix3/releases
-    echo   - WiX v4: dotnet tool install --global wix ^(Note: Requires project updates for v4^)
+    echo   - WiX v4: dotnet tool install --global wix (Note: Requires project updates for v4^)
     echo.
     pause
     exit /b 1
